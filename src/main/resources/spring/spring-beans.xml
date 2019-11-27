@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--1.创建数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!--数据库驱动-->
+        <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+        <!--数据库驱动-->
+        <property name="jdbcUrl" value="jdbc:mysql:///3166shoppingwebsite"></property>
+        <!--数据库驱动-->
+        <property name="user" value="root"></property>
+        <!--数据库驱动-->
+        <property name="password" value="123456"></property>
+    </bean>
+    <!--2.创建会话工厂-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--2.1加载数据源-->
+        <property name="dataSource" ref="dataSource"></property>
+        <!--2.3注册映射文件-->
+        <property name="mapperLocations" value="classpath*:mapper/*Mapper.xml"></property>
+    </bean>
+    <!--3.配置dao接口映射-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--3.1指定会话工厂-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+        <!--3.2扫描dao包-->
+        <property name="basePackage" value="com.sjy.dao"></property>
+    </bean>
+</beans>
